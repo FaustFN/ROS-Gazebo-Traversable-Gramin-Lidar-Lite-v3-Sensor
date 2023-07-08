@@ -7,6 +7,8 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="model" default="$(find rotating_lidar_sensor_position_controller)/urdf/robot.urdf.xacro"/>
+  <arg name="actuator_min_angle" default="-40.0"/> 
+  <arg name="actuator_max_angle" default="40.0"/> 
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -38,7 +40,10 @@
   <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/-->
 
   <!-- actuator node -->
-  <node name="sensor_actuator_node" pkg="rotating_lidar_sensor_position_controller" type="sensor_actuator_node.py" output="screen"/>
+  <node name="sensor_actuator_node" pkg="rotating_lidar_sensor_position_controller" type="sensor_actuator_node.py" output="screen">
+    <param name="actuator_min_angle" type="double" value="$(arg actuator_min_angle)"/>
+    <param name="actuator_max_angle" type="double" value="$(arg actuator_max_angle)"/>
+  </node>
 
   <!-- Sensor node -->
   <node name="lidar_sensor_node" pkg="rotating_lidar_sensor_position_controller" type="lidar_sensor_node.py" output="screen"/>
