@@ -37,8 +37,6 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50.0" />
   </node>
-  <!-- joint_state_publisher used for debugging-->
-  <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/-->
 
   <!-- actuator node -->
   <node name="sensor_actuator_node" pkg="rotating_lidar_sensor_position_controller" type="sensor_actuator_node.py" output="screen">
@@ -48,7 +46,4 @@
 
   <!-- Sensor node -->
   <node name="lidar_sensor_node" pkg="rotating_lidar_sensor_position_controller" type="lidar_sensor_node.py" output="screen"/>
-
-  <!-- Show in Rviz   -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rotating_lidar_sensor_position_controller)/config/rviz.rviz"/>
 </launch>
