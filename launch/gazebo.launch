@@ -9,12 +9,12 @@
   <arg name="model" default="$(find rotating_lidar_sensor_position_controller)/urdf/robot.urdf.xacro"/>
   <arg name="actuator_min_angle" default="-40.0"/> 
   <arg name="actuator_max_angle" default="40.0"/>
-  <arg name="sensor_update_rate" default="200.0"/>
+  <arg name="sensor_update_rate" default="500.0"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="gui" value="$(arg gui)" />
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="gui" value="$(arg gui)"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
@@ -27,7 +27,7 @@
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
+        args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen"/>
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
@@ -35,7 +35,7 @@
   
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="publish_frequency" type="double" value="50.0"/>
   </node>
 
   <!-- actuator node -->
