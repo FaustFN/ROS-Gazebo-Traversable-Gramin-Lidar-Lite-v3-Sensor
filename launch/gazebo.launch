@@ -8,7 +8,8 @@
   <arg name="debug" default="false"/>
   <arg name="model" default="$(find rotating_lidar_sensor_position_controller)/urdf/robot.urdf.xacro"/>
   <arg name="actuator_min_angle" default="-40.0"/> 
-  <arg name="actuator_max_angle" default="40.0"/> 
+  <arg name="actuator_max_angle" default="40.0"/>
+  <arg name="sensor_update_rate" default="200.0"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -19,7 +20,7 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model) sensor_update_rate:=$(arg sensor_update_rate)"/>
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam command="load" file="$(find rotating_lidar_sensor_position_controller)/urdf/control.yaml"/>

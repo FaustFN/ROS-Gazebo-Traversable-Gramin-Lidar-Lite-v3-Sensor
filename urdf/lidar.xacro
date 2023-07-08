@@ -13,6 +13,8 @@
              <color rgba="0 0 0 1"/>
         </material>
 
+        <xacro:arg name="sensor_update_rate" default="500.0"/>
+
         <!-- LIDAR SENSOR BASE LINK -->
         <link name="sensor_base_link">
             <!--radius = 2mm heigth = 1mm-->
@@ -128,7 +130,7 @@
                 <visualize>true</visualize>
 
                 <!-- Set the update rate of the sensor 50-500hz-->
-                <update_rate>500</update_rate>
+                <update_rate>$(arg sensor_update_rate)</update_rate>
                 <ray>
 
                     <!-- The scan element contains the horizontal and vertical beams -->
