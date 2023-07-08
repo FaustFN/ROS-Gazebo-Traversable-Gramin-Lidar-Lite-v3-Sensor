@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+    <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+        <material name="red">
+             <color rgba="1 0 0 1"/>
+        </material>
+
+        <material name="grey">
+             <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+
+        <material name="black">
+             <color rgba="0 0 0 1"/>
+        </material>
+
+        <!-- LIDAR SENSOR BASE LINK -->
+        <link name="sensor_base_link">
+            <!--radius = 2mm heigth = 1mm-->
+            <xacro:property name="radius" value="0.20"/>
+            <xacro:property name="heigth" value="0.10"/>
+            <xacro:property name="mass" value="0.100"/>
+            <visual>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/sensor_cylinder.stl"/>
+                </geometry>
+                <material name="grey"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/sensor_cylinder.stl"/>
+                </geometry>
+                <surface>
+                    <friction>
+                       <ode>
+                            <mu>0.1</mu>
+                            <mu2>0.1</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+            <inertial>
+                <mass value="${mass}"/>
+                <inertia ixx="${mass / 12.0 * (3.0 * radius * radius + heigth * heigth)}" iyy="${mass / 12.0 * (3.0 * radius * radius + heigth * heigth)}" izz="${mass / 2.0 * radius * radius}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="sensor_base_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+
+        <!-- LIDAR SENSOR Mounting Plate LINK -->
+        <link name="sensor_mounting_plate_link">
+            <!--radius = 2mm heigth = 0.1mm-->
+            <!-- values in cm and g-->
+            <xacro:property name="radius" value="0.20"/>
+            <xacro:property name="heigth" value="0.1"/>
+            <xacro:property name="mass" value="0.10"/>
+            <visual>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/sensor_plate.stl"/>
+                </geometry>
+                <material name="red"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/sensor_plate.stl"/>
+                </geometry>
+                <surface>
+                    <friction>
+                       <ode>
+                            <mu>0.1</mu>
+                            <mu2>0.1</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+            <inertial>
+                <mass value="${mass}"/>
+                <inertia ixx="${mass / 12.0 * (3.0 * radius * radius + heigth * heigth)}" iyy="${mass / 12.0 * (3.0 * radius * radius + heigth * heigth)}" izz="${mass / 2.0 * radius * radius}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="sensor_mounting_plate_link">
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+
+        <!-- Garmin Lidar Lite V3 LINK -->
+        <link name="laser_frame">
+            <!--length = 40mm, width = 48mm, heigth = 20mm, mass = 22g-->
+            <xacro:property name="length" value="0.40"/>
+            <xacro:property name="width" value="0.48"/>
+            <xacro:property name="heigth" value="0.20"/>
+            <xacro:property name="mass" value="0.22"/>
+            <visual>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/Garmin_Lidar_Lite_3.stl"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://rotating_lidar_sensor/models/Garmin_Lidar_Lite_3.stl"/>
+                </geometry>
+            </collision>
+            <surface>
+                    <friction>
+                       <ode>
+                            <mu>0.1</mu>
+                            <mu2>0.1</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            <inertial>
+                <mass value="${mass}"/>
+                <inertia ixx="${mass / 12.0 * (width * width + heigth * heigth)}" iyy="${mass / 12.0 * (length * length + heigth * heigth)}" izz="${mass / 12.0 * (length * length + width * width)}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="laser_frame">
+            <material>Gazebo/Black</material>
+            <sensor name="laser" type="ray">
+
+                <!-- Position the ray sensor based on the specification-->
+                <pose>0 0 0 0 0 0</pose>
+
+                <!-- Enable visualization to see the rays in the GUI -->
+                <visualize>true</visualize>
+
+                <!-- Set the update rate of the sensor 50-500hz-->
+                <update_rate>500</update_rate>
+                <ray>
+
+                    <!-- The scan element contains the horizontal and vertical beams -->
+                    <scan>
+
+                        <!-- The horizontal beams -->
+                        <horizontal>
+
+                            <!-- Number of beams(samples) -->
+                            <samples>1</samples>
+                            
+                            <!-- Resolution is multiplied by samples to determine number of simulated beams vs interpolated beams. See:http://sdformat.org/spec?ver=1.6&elem=sensor#horizontal_resolution-->
+                            <resolution>1</resolution>
+
+                            <!-- Minimum angle in radians -->
+                            <min_angle>0</min_angle>
+
+                            <!-- Maximum angle in radians -->
+                            <max_angle>0</max_angle>
+                        </horizontal>
+                    </scan>
+
+                    <!-- Range defines characteristics of an individual beam -->
+                    <range>
+
+                        <!-- Minimum distance of the beam -->
+                        <min>0.05</min>
+
+                        <!-- Maximum distance of the beam -->
+                        <max>40</max>
+
+                        <!-- Linear resolution of the beam -->
+                        <resolution>0.001</resolution>
+                    </range>
+                </ray>
+                <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+                    <frameName>laser_frame</frameName>
+                    <topicName>/sensor/laser/scan</topicName>
+                </plugin>
+            </sensor>
+        </gazebo>
+
+        <!-- LIDAR SENSOR BASE JOINT -->
+        <joint name="base_link_to_sensor" type="fixed">
+            <parent link="base_link"/>
+            <child link="sensor_base_link"/>
+            <origin xyz="0 0 0"/>
+        </joint>
+
+        <!-- LIDAR SENSOR BASE to SENSOR Mounting Plate JOINT -->
+        <joint name="sensor_base_to_sensor_mounting_plate" type="continuous">
+            <parent link="sensor_base_link"/>
+            <child link="sensor_mounting_plate_link"/>
+            <origin xyz="0 0 0.01"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <!-- LIDAR SENSOR Mounting Plate to Garmin Lidar Lite V3 -->
+        <joint name="sensor_mounting_plate_to_Garmin_Lidar_Lite_V3" type="fixed">
+            <parent link="sensor_mounting_plate_link"/>
+            <child link="laser_frame"/>
+            <origin xyz="-0.02 0 0.001" rpy="0 0 0"/>
+        </joint>
+
+
+        <!-- transmission -->
+        <transmission name="transmission_sensor_base_to_sensor_head">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="sensor_base_to_sensor_mounting_plate">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor_sensor_head">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>0.7</mechanicalReduction>
+            </actuator>
+        </transmission>
+        
+        <!-- ROS Control plugin for Gazebo -->
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"></plugin>
+        </gazebo>
+    </robot>

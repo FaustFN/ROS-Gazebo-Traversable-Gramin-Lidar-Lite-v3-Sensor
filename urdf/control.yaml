@@ -1,0 +1,17 @@
+# Publish all joint states -----------------------------------
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+# Position Controllers ---------------------------------------
+actuator_position_controller:
+    type: position_controllers/JointPositionController
+    joint: sensor_base_to_sensor_mounting_plate
+
+# PID gains --------------------------------------------------
+gazebo_ros_control:
+    pid_gains:
+        sensor_base_to_sensor_mounting_plate:
+            p: 0.5
+            i: 0.01
+            d: 0.5
