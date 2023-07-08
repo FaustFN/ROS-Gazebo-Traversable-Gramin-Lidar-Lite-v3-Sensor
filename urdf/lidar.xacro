@@ -21,13 +21,13 @@
             <xacro:property name="mass" value="0.100"/>
             <visual>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/sensor_cylinder.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_cylinder.stl"/>
                 </geometry>
                 <material name="grey"/>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/sensor_cylinder.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_cylinder.stl"/>
                 </geometry>
                 <surface>
                     <friction>
@@ -57,13 +57,13 @@
             <xacro:property name="mass" value="0.10"/>
             <visual>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/sensor_plate.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_plate.stl"/>
                 </geometry>
                 <material name="red"/>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/sensor_plate.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_plate.stl"/>
                 </geometry>
                 <surface>
                     <friction>
@@ -94,13 +94,13 @@
             <xacro:property name="mass" value="0.22"/>
             <visual>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/Garmin_Lidar_Lite_3.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/Garmin_Lidar_Lite_3.stl"/>
                 </geometry>
                 <material name="black"/>
             </visual>
             <collision>
                 <geometry>
-                    <mesh filename="package://rotating_lidar_sensor/models/Garmin_Lidar_Lite_3.stl"/>
+                    <mesh filename="package://rotating_lidar_sensor_position_controller/models/Garmin_Lidar_Lite_3.stl"/>
                 </geometry>
             </collision>
             <surface>
