@@ -7,6 +7,7 @@ from geometry_msgs.msg import Point
 import tf.transformations
 from rotating_lidar_sensor_position_controller.msg import lidar_sensor_data
 
+
 # returns the rotation angle from a rotatin and translation matrix
 def transform_angles(matrix):
     angle, direc, point = tf.transformations.rotation_from_matrix(matrix)
@@ -27,8 +28,7 @@ def getGaussian(value):
     
     gaussian_sample = np.random.default_rng().normal(value, accuracy_current/2)
     return gaussian_sample
-
-    
+ 
 
 class lidar_sensor:
     def __init__(self):
@@ -37,6 +37,7 @@ class lidar_sensor:
         self.sensor_data_pub = rospy.Publisher("/sensor/data", lidar_sensor_data, queue_size=2)
         self.sensor_sub = rospy.Subscriber("/sensor/laser/scan", LaserScan, self.sensor_data_callback)
         self.sensor_data_raw = LaserScan()
+
 
     # Look up for the transformation between target_frame and source_frame
     def update_base_link_to_laser_offset(self, target_frame, source_frame):
