@@ -98,14 +98,14 @@ und stellt diese zusammen mit der Winkelposition des Sensors auf einer neuen Top
 
 ### Anpassungen an den urdf Daten
 
-* Die Positionierung des Sensors erfolgt in der Datei **'lidar.xacro**:
+* Die Positionierung des Sensors erfolgt in der Datei **'lidar.xacro'**:
 
-	- Joint **'base_link_to_sensor'** Option **'<parent link="base_link"/>'**  auf die Linkbezeichnung des Teils verweisen, an dem der Sensor befestigt sein soll 
-	- Option **'<origin xyz="0 0 0" rpy="0 0 0"/>'** für Positionierung und Orrientierung
+	- Joint **'base_link_to_sensor'** Option **```<parent link="base_link"/>```**  auf die Linkbezeichnung des Teils verweisen, an dem der Sensor befestigt sein soll 
+	- Option **```<origin xyz="0 0 0" rpy="0 0 0"/>```** für Positionierung und Orrientierung
 
 * In der urdf Datei des neuen Projektes muss folgender Eintrag ergänzt werden, um den Sensor in das Modell einzubinden:
 
-	 - **`<xacro:include filename="lidar.xacro" />`**
+	 - **```<xacro:include filename="lidar.xacro" />```**
 
 * **'robot.urdf.xacro'** und **'robot_core.xacro'** werden nicht mehr benötigt
 
