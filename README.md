@@ -15,7 +15,7 @@ Zur Steuerung der Bewegung wird ein JointPositionController Element über den Ak
 #### Dependencies
 
 - [Robot Operating System (ROS)](http://wiki.ros.org) (Framework für Roboteranwendungen),
-- [Gazebo] (https://gazebosim.org/home) (Simulationsumgebung)
+- [Gazebo](https://gazebosim.org/home) (Simulationsumgebung)
 
 #### Building
 
@@ -35,13 +35,14 @@ Zum Starten der Testumgebung ist das beiliegende Launchfile auszuführen:
 
 ## Launch files
 
-* **gazebo.launch:** launches everything(gazebo, Aktuator Node, Sensor Node, usw.)
+* **gazebo.launch:** Startet alles (gazebo, Aktuator Node, Sensor Node, usw.)
 
-	Winkel werden im Rechte-Hand-Koordinatensystem um die positive Z-Achse gegen den Uhrzeigersinn aufgetragen
-	Die Null Grad Position liegt entlang der Positiven X-Achse
      - **`actuator_min_angle`** Position des Endanschlages für Rotation im Uhrzeigersinn in ° Default: `-40.0`.
 	 - **`actuator_max_angle`** Position des Endanschlages für Rotation gegen den Uhrzeigersinn in ° Default: `40.0`.
 	 - **`actuator_max_angle`** Rate mit der der Sensor neue Daten sendet in hz Default: `500`.
+
+	 Winkel werden im Rechte-Hand-Koordinatensystem um die positive Z-Achse gegen den Uhrzeigersinn aufgetragen
+	 Die Null Grad Position liegt entlang der Positiven X-Achse im jeweiligen Gelenk-Koordinatensystem
 
 ## Nodes
 
@@ -93,4 +94,19 @@ und stellt diese zusammen mit der Winkelposition des Sensors auf einer neuen Top
 	
 	Für weitere Details zum Aufbau der Nachricht siehe msg/lidar_sensor_data.msg
 	
-## Einbindung des Sensors in weitere Projekte
+## Einbindung des Sensors in andere Projekte
+
+### Anpassungen an den urdf Daten
+
+* Die Positionierung des Sensors erfolgt in der Datei **'lidar.xacro**:
+
+	- Joint **'base_link_to_sensor'** Option **'<parent link="base_link"/>'**  auf die Linkbezeichnung des Teils verweisen, an dem der Sensor befestigt sein soll 
+	- Option **'<origin xyz="0 0 0" rpy="0 0 0"/>'** für Positionierung und Orrientierung
+
+* In der urdf Datei des neuen Projektes muss folgender Eintrag ergänzt werden, um den Sensor in das Modell einzubinden:
+
+	 - **`<xacro:include filename="lidar.xacro" />`**
+
+* **'robot.urdf.xacro'** und **'robot_core.xacro'** werden nicht mehr benötigt
+
+### Anpassungen am Launch file
