@@ -33,7 +33,7 @@ class actuator:
         if angle_deg < actuator.actuator_min_angle:
             angle_deg = actuator.actuator_min_angle
             rospy.logwarn('Target angle is smaller than min. angle. Setting angle to %s°.' % (actuator.actuator_min_angle))
-        self.actuator_angle = angle_deg * (math.pi/180)
+        self.actuator_angle = deg2rad(angle_deg)
         self.actuator_angle_pub.publish(self.actuator_angle)
 
 
@@ -46,6 +46,5 @@ if __name__ == '__main__':
     rospy.init_node('sensor_actuator_node', anonymous=True)
     rospy.loginfo('Starting actuator node')
     rospy.on_shutdown(shutdownhook)
-    r=rospy.Rate(30)
     actuator = actuator()
     rospy.spin()

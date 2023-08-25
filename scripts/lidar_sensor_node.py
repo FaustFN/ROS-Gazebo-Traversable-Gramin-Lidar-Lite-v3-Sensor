@@ -18,6 +18,7 @@ def transform_angles(matrix):
 def getGaussian(value):
     if np.isinf(value):
         return value
+    #accuracy value for 2 sigma certancy
     if value < 5:
         accuracy_min = 0.025
         accuracy_current = value / 5 * accuracy_min

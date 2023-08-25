@@ -110,3 +110,6 @@ und stellt diese zusammen mit der Winkelposition des Sensors auf einer neuen Top
 * **'robot.urdf.xacro'** und **'robot_core.xacro'** werden nicht mehr benötigt
 
 ### Anpassungen am Launch file
+
+* Die Einträge aus dem Launchfile dieses Sensorprojektes sollten in das Launchfile des Roboters übernommen werden, sofern nicht bereits vorhanden.
+* Der Eintrag **```model```** sollte natürlich auf die Hauptbeschreibungsdatei des Roboters verweisen.
