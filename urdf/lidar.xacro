@@ -20,7 +20,7 @@
             <!--radius = 20mm heigth = 10mm-->
             <xacro:property name="radius" value="0.02"/>
             <xacro:property name="heigth" value="0.01"/>
-            <xacro:property name="mass" value="0.01"/>
+            <xacro:property name="mass" value="0.0134"/>
             <visual>
                 <geometry>
                     <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_cylinder.stl"/>
@@ -54,8 +54,8 @@
         <link name="sensor_mounting_plate_link">
             <!--radius = 20mm heigth = 1mm-->
             <xacro:property name="radius" value="0.2"/>
-            <xacro:property name="heigth" value="0.1"/>
-            <xacro:property name="mass" value="0.1"/>
+            <xacro:property name="heigth" value="0.01"/>
+            <xacro:property name="mass" value="0.0067"/>
             <visual>
                 <geometry>
                     <mesh filename="package://rotating_lidar_sensor_position_controller/models/sensor_plate.stl"/>
